@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+:root {
+  --color-primary: #7C3AED;
+  --color-bg: #FFFFFF;
+  --color-bg-secondary: #FAFAFA;
+  --color-bg-tertiary: #F4F4F5;
+  --color-surface: #FFFFFF;
+  --color-text-primary: #18181B;
+  --color-text-secondary: #52525B;
+  --color-text-tertiary: #A1A1AA;
+  --color-border: #E4E4E7;
+  --color-border-strong: #D4D4D8;
+  --transition-fast: 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-base: 250ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dark {
+  --color-bg: #0A0A0A;
+  --color-bg-secondary: #18181B;
+  --color-bg-tertiary: #27272A;
+  --color-surface: #18181B;
+  --color-text-primary: #FAFAFA;
+  --color-text-secondary: #A1A1AA;
+  --color-text-tertiary: #71717A;
+  --color-border: #27272A;
+  --color-border-strong: #3F3F46;
+}
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
+    min-height: 100vh;
+    transition: background-color var(--transition-base), color var(--transition-base);
+    overflow-x: hidden;
+  }
+  ::selection { background-color: var(--color-primary); color: white; }
+  :focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; border-radius: 8px; transition: outline-offset 0.1s ease; }
+  
+  /* Premium macOS-like scrollbars */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--color-border-strong); border-radius: 9999px; border: 2px solid var(--color-bg); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--color-text-tertiary); }
+}
+
+@layer components {
+  .glass {
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+  }
+  .dark .glass {
+    background: rgba(24, 24, 27, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+  }
+  .text-gradient {
+    background: linear-gradient(135deg, #2563EB, #7C3AED);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  /* Leaflet Custom Tooltip */
+  .custom-leaflet-tooltip {
+    background: white;
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    padding: 0;
+    color: #171717;
+  }
+  .dark .custom-leaflet-tooltip {
+    background: #171717;
+    color: white;
+    border: 1px solid #262626;
+  }
+  .custom-leaflet-tooltip::before {
+    display: none;
+  }
+  .skeleton {
+    background: linear-gradient(90deg, var(--color-bg-tertiary) 25%, var(--color-bg-secondary) 50%, var(--color-bg-tertiary) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+    border-radius: 8px;
+  }
+  .card { 
+    background: var(--color-surface); 
+    border: 1px solid var(--color-border); 
+    border-radius: 16px; 
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03); 
+    transition: all var(--transition-base);
+  }
+  .card:hover {
+    box-shadow: 0 12px 32px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
+    transform: translateY(-2px);
+  }
+  .container-app { max-width: 1280px; margin-left: auto; margin-right: auto; padding-left: 1rem; padding-right: 1rem; }
+  @media (min-width: 640px) { .container-app { padding-left: 1.5rem; padding-right: 1.5rem; } }
+  @media (min-width: 1024px) { .container-app { padding-left: 2rem; padding-right: 2rem; } }
+  .section-padding { padding-top: 4rem; padding-bottom: 4rem; }
+  @media (min-width: 768px) { .section-padding { padding-top: 6rem; padding-bottom: 6rem; } }
+  @media (min-width: 1024px) { .section-padding { padding-top: 8rem; padding-bottom: 8rem; } }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+  .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+}
+
+@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }

@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "types": ["vite/client"]
+  },
+  "include": ["src/pages/auth/VerifyEmailPage.tsx"]
+}
+// Trigger IDE update
