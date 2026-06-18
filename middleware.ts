@@ -29,8 +29,8 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
 
-  // If user is authenticated and trying to access login/register
-  if (isAuthRoute && hasAuthToken) {
+  // If user is authenticated and trying to access login/register/landing
+  if ((isAuthRoute || pathname === '/') && hasAuthToken) {
     return NextResponse.redirect(new URL('/feed', request.url));
   }
 

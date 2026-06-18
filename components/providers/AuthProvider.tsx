@@ -76,8 +76,8 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
 
     if (!user && !isPublicRoute) {
       router.replace('/login');
-    } else if (user && isAuthOnlyRoute) {
-      // Only redirect away from login/register pages, NOT from landing page '/'
+    } else if (user && (isAuthOnlyRoute || pathname === '/')) {
+      // Redirect away from login/register and landing page '/' if authenticated
       router.replace('/feed');
     }
   }, [isLoading, _hasHydrated, user, pathname, router]);
