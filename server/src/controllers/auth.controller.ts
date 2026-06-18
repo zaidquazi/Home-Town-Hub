@@ -30,8 +30,8 @@ const createSendToken = async (user: any, statusCode: number, res: Response, req
   res.cookie('refreshToken', refreshToken, {
     expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
     httpOnly: true,
-    secure: env.NODE_ENV === 'production',
-    sameSite: 'lax',
+    secure: true, // must be true for SameSite=none
+    sameSite: 'none',
   });
 
   // Remove password from output
@@ -160,8 +160,8 @@ export const logout = async (req: Request, res: Response) => {
 
   res.clearCookie('refreshToken', {
     httpOnly: true,
-    secure: env.NODE_ENV === 'production',
-    sameSite: 'lax',
+    secure: true,
+    sameSite: 'none',
   });
   
   res.status(200).json({ status: 'success' });

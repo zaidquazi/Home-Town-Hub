@@ -30,12 +30,21 @@ export const useAuthStore = create<AuthStore>()(
       setUser: (user) => set({ user, isAuthenticated: !!user }),
       setAccessToken: (accessToken) => set({ accessToken }),
       setLoading: (isLoading) => set({ isLoading }),
-      login: (user, accessToken) => set({ user, accessToken, isAuthenticated: true, isLoading: false }),
+      login: (user, accessToken) => {
+        // Set a dummy cookie so Next.js middleware on the frontend domain knows we are logged in
+        if (typeof document !== 'undefined') {
+          document.cookie = `hh_auth_token=1; path=/; max-age=${7 * 24 * 60 * 60}; SameSite=Lax`;
+        }
+        set({ user, accessToken, isAuthenticated: true, isLoading: false });
+      },
       logout: async () => {
         try {
           await api.post('/auth/logout');
         } catch (e) {
           console.error(e);
+        }
+        if (typeof document !== 'undefined') {
+          document.cookie = 'hh_auth_token=; path=/; max-age=0; SameSite=Lax';
         }
         set({ user: null, accessToken: null, isAuthenticated: false, isLoading: false });
       },
